@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadeia</title>
+<style>
+  :root {
+    --neon-cyan: #2de2e6;
+    --neon-pink: #ff2ea6;
+    --neon-purple: #a742f5;
+    --bg: #08050f;
+    --panel: #0e0a1a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: #e8e6f5;
+    font-family: 'Courier New', ui-monospace, monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+    overflow-x: hidden;
+    background-image:
+      linear-gradient(rgba(45, 226, 230, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 226, 230, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(167, 66, 245, 0.18), transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(255, 46, 166, 0.12), transparent 60%);
+    z-index: 0;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 9vw, 5rem);
+    letter-spacing: 0.35em;
+    padding-left: 0.35em; /* offset for letter-spacing on the last char */
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.8),
+      0 0 18px var(--neon-cyan),
+      0 0 40px var(--neon-cyan),
+      0 0 3px var(--neon-pink);
+    animation: flicker 5s infinite ease-in-out;
+  }
+
+  .tagline {
+    margin: -1rem 0 0;
+    color: var(--neon-pink);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    text-shadow: 0 0 8px rgba(255, 46, 166, 0.7);
+  }
+
+  .hero {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(45, 226, 230, 0.4);
+    box-shadow:
+      0 0 20px rgba(45, 226, 230, 0.25),
+      0 0 60px rgba(167, 66, 245, 0.15),
+      inset 0 0 40px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(160deg, #150c26, #0a0715);
+  }
+
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero .placeholder {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: rgba(232, 230, 245, 0.5);
+    border: 1px dashed rgba(45, 226, 230, 0.4);
+    margin: 10px;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 1rem;
+  }
+
+  .hero .placeholder strong {
+    color: var(--neon-cyan);
+    font-size: 0.85rem;
+  }
+
+  p.blurb {
+    color: rgba(232, 230, 245, 0.6);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(232, 230, 245, 0.3);
+    text-transform: uppercase;
+  }
+
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 80%, 100% { opacity: 1; }
+    20%, 22%, 79% { opacity: 0.85; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div>
+      <h1>Jadeia</h1>
+      <p class="tagline">// signal from the night city</p>
+    </div>
+
+    <div class="hero">
+      <img
+        id="hero-img"
+        src="images/hero.jpg"
+        alt="Jadeia"
+        onerror="this.style.display='none'; document.getElementById('hero-placeholder').style.display='flex';"
+      >
+      <div id="hero-placeholder" class="placeholder">
+        <strong>IMAGE PLACEHOLDER</strong>
+        <span>drop a file at images/hero.jpg</span>
+      </div>
+    </div>
+
+    <p class="blurb">More coming soon.</p>
+  </main>
+
+  <footer>Jadeia &copy; 2026</footer>
+</body>
+</html>
