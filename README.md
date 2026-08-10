@@ -30,4 +30,4 @@ All imagery on this site is public domain or CC0. No AI-generated imagery is use
 
 ## License
 
-Site text and design © [NAME/YEAR — tbd]. Not for reuse without permission. Source imagery remains under its original public domain / CC0 terms per the attributions above.
+Site text and design © Jadeia / 2026. Not for reuse without permission. Source imagery remains under its original public domain / CC0 terms per the attributions above.
