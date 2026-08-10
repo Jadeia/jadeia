@@ -31,15 +31,21 @@ the holding institution's open-access release, credited in full in the caption:
 | IV | Dürer, *Saint George Standing*, engraving, ca. 1502 | [Met 391133](https://www.metmuseum.org/art/collection/search/391133), CC0 |
 | V | Dürer, *Saint George Slaying the Dragon*, woodcut, ca. 1504 | [Met 388149](https://www.metmuseum.org/art/collection/search/388149), CC0 |
 
-To populate `assets/img/plates/`:
+The markup expects these exact paths:
 
-```sh
-bash tools/fetch-plates.sh
+```
+assets/img/plates/plate-i-aberdeen-bestiary-f66r.jpg
+assets/img/plates/plate-ii-durer-saint-george-and-the-dragon.jpg
+assets/img/plates/plate-iii-durer-saint-michael-fighting-the-dragon.jpg
+assets/img/plates/plate-iv-durer-saint-george-standing.jpg
+assets/img/plates/plate-v-durer-saint-george-slaying-the-dragon.jpg
 ```
 
-The four Met plates download automatically; Plate I must be saved by hand from
-the Aberdeen page to `assets/img/plates/plate-i-aberdeen-bestiary-f66r.jpg`, and
-the script reports whether it is there.
+`bash tools/fetch-plates.sh` downloads the four Met plates and optimises them to
+those filenames (1600px long edge, quality 82, metadata stripped). Plate I has
+to be saved by hand from the Aberdeen page; the script reports whether it is
+there, and optimises it on a second run. If the files are added by other means,
+run the script anyway to normalise their size.
 
 Until a plate file exists, its frame renders as an empty mount rather than a
 broken image. That is the `onerror` attribute on each `<img>`; it can be dropped
@@ -65,8 +71,25 @@ once all five files are in place.
   and nowhere else.
 - Dates are Roman (`Jadeia · MMXXVI`); dividers are `✦`; captions run
   *Plate N — title — full attribution*.
-- Type: Cinzel (display), IM Fell English (body), UnifrakturMaguntia (drop
-  caps). The body face is set once, as `--font-body` in `assets/css/site.css`.
+- Type: Cinzel (display), EB Garamond (body), UnifrakturMaguntia (drop caps).
+  The body face is set once, as `--font-body` in `assets/css/site.css`, paired
+  with `--body-size` so the two candidate faces can be matched optically.
+
+## Comparing body faces (temporary)
+
+Open any page with `?type=compare` for a switcher between EB Garamond and IM
+Fell English. The choice follows you across pages until you close the panel.
+Visitors without the query string never see it.
+
+```sh
+python3 -m http.server 8000
+open 'http://localhost:8000/chronicles/?type=compare'
+```
+
+Once the face is settled, remove the scaffolding: delete
+`assets/js/type-compare.js` and its `<script>` tag on all nine pages, the two
+blocks marked "Comparison mode" in `assets/css/site.css`, and the losing family
+from each page's Google Fonts `<link>`.
 
 ## Preview
 
