@@ -13,7 +13,7 @@ chronicles/*.html           One file per entry
 plates/index.html           Gallery
 404.html                    Not-found page
 assets/css/site.css         The whole stylesheet
-assets/img/plates/          Plate images (fetched, not committed by hand)
+assets/img/plates/          Plate images (committed to the repo)
 assets/img/sigil.svg        Favicon
 tools/fetch-plates.sh       Downloads and optimises the plates
 ```
@@ -29,7 +29,7 @@ the holding institution's open-access release, credited in full in the caption:
 | II | Dürer, *Saint George and the Dragon*, woodcut, ca. 1504 | [Met 387574](https://www.metmuseum.org/art/collection/search/387574), CC0 |
 | III | Dürer, *Saint Michael Fighting the Dragon* (The Apocalypse) | [Met 368340](https://www.metmuseum.org/art/collection/search/368340), CC0 |
 | IV | Dürer, *Saint George Standing*, engraving, ca. 1502 | [Met 391133](https://www.metmuseum.org/art/collection/search/391133), CC0 |
-| V | Schongauer, *Saint George Slaying the Dragon*, engraving, 1470–1491 | The Met, accession 19.7.2, public domain |
+| V | Schongauer, *Saint George Slaying the Dragon*, engraving, 1470–1491 | [Met 367016](https://www.metmuseum.org/art/collection/search/367016) (accession 19.7.2), public domain |
 
 The markup expects these exact paths:
 
@@ -95,9 +95,10 @@ what proves the tag actually fires.
   and nowhere else.
 - Dates are Roman (`Jadeia · MMXXVI`); dividers are `✦`; captions run
   *Plate N — title — full attribution*.
-- Type: Cinzel (display), EB Garamond (body), UnifrakturMaguntia (drop caps).
-  The body face is set once, as `--font-body` in `assets/css/site.css`, paired
-  with `--body-size` so the two candidate faces can be matched optically.
+- Type: Cinzel (display), EB Garamond (body, **provisional** — pending a choice
+  between EB Garamond and IM Fell English), UnifrakturMaguntia (drop caps). The
+  body face is set once, as `--font-body` in `assets/css/site.css`, paired with
+  `--body-size` so the two candidate faces can be matched optically.
 
 ## Comparing body faces (temporary)
 
@@ -123,3 +124,7 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000>. Root-absolute paths need the server root to
 be the repository root, so don't open the files directly with `file://`.
+
+## License
+
+Site text and design © Jadeia / 2026. Not for reuse without permission. Source imagery remains under its original public domain / CC0 terms per the attributions above.
