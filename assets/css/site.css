@@ -29,9 +29,8 @@
   --mat:           #d4cade;
   --mat-edge:      #b3a6c4;
 
-  /* Type. Swap --font-body in one place to change every page.
-     --body-size is tied to the face: EB Garamond and IM Fell English have
-     different x-heights, so matching them optically means different px. */
+  /* Type. Swap --font-body in one place to change every page;
+     --body-size is paired with it, since face and size go together. */
   --font-display:  'Cinzel', 'Trajan Pro', Georgia, serif;
   --font-body:     'EB Garamond', Garamond, Georgia, 'Times New Roman', serif;
   --font-initial:  'UnifrakturMaguntia', Georgia, serif;
@@ -39,14 +38,6 @@
 
   --measure:       64ch;
   --gutter:        clamp(1.15rem, 5vw, 3rem);
-}
-
-/* Comparison mode only — set by assets/js/type-compare.js on ?type=compare.
-   Delete this block, the script, and the IM Fell English request in each
-   page's font <link> once the body face is settled. */
-:root[data-body-font="fell"] {
-  --font-body:  'IM Fell English', Georgia, 'Times New Roman', serif;
-  --body-size:  clamp(1.06rem, 0.98rem + 0.35vw, 1.2rem);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -65,9 +56,8 @@ body {
     var(--void);
   color: var(--text);
   font-family: var(--font-body);
-  /* Both candidate faces were cut for dark ink on light paper; reversed out
-     of a dark ground they want more size and leading than they would need
-     in print. */
+  /* EB Garamond was cut for dark ink on light paper; reversed out of a dark
+     ground it wants more size and leading than it would need in print. */
   font-size: var(--body-size);
   line-height: 1.78;
   text-rendering: optimizeLegibility;
@@ -471,52 +461,5 @@ em { font-style: italic; }
 @media print {
   body { background: #fff; color: #000; }
   .nav, .pagination { display: none; }
-  .typecmp { display: none; }
 }
 
-/* --- Comparison mode ----------------------------------------------------
-   Temporary. Hidden from visitors: the panel is only built when the page is
-   opened with ?type=compare. Remove with the rest of the compare scaffolding
-   once the body face is chosen.
-   ------------------------------------------------------------------------ */
-
-.typecmp {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.6rem;
-  background: rgba(23, 14, 38, 0.96);
-  border: 1px solid var(--rule);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  font-family: var(--font-display);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.typecmp button {
-  padding: 0.38rem 0.6rem;
-  background: transparent;
-  color: var(--text-dim);
-  border: 1px solid transparent;
-  font: inherit;
-  cursor: pointer;
-}
-
-.typecmp button:hover { color: var(--violet); }
-
-.typecmp button[aria-pressed="true"] {
-  color: var(--gold);
-  border-color: var(--gold-dim);
-}
-
-.typecmp__close {
-  margin-left: 0.2rem;
-  padding: 0.2rem 0.4rem !important;
-  font-size: 0.85rem;
-  line-height: 1;
-}

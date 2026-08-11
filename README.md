@@ -64,7 +64,8 @@ for f in $(grep -rhoE '/assets/img/plates/[a-z0-9.-]+' --include='*.html' . | so
 done
 ```
 
-The GA4 snippet is on every page (expect `1` beside all nine files):
+The GA4 snippet is on every page (expect `2` beside all nine files — the loader
+line and the `config` line):
 
 ```sh
 grep -rc G-61T0721KTX --include='*.html' .
@@ -95,26 +96,9 @@ what proves the tag actually fires.
   and nowhere else.
 - Dates are Roman (`Jadeia · MMXXVI`); dividers are `✦`; captions run
   *Plate N — title — full attribution*.
-- Type: Cinzel (display), EB Garamond (body, **provisional** — pending a choice
-  between EB Garamond and IM Fell English), UnifrakturMaguntia (drop caps). The
-  body face is set once, as `--font-body` in `assets/css/site.css`, paired with
-  `--body-size` so the two candidate faces can be matched optically.
-
-## Comparing body faces (temporary)
-
-Open any page with `?type=compare` for a switcher between EB Garamond and IM
-Fell English. The choice follows you across pages until you close the panel.
-Visitors without the query string never see it.
-
-```sh
-python3 -m http.server 8000
-open 'http://localhost:8000/chronicles/?type=compare'
-```
-
-Once the face is settled, remove the scaffolding: delete
-`assets/js/type-compare.js` and its `<script>` tag on all nine pages, the two
-blocks marked "Comparison mode" in `assets/css/site.css`, and the losing family
-from each page's Google Fonts `<link>`.
+- Type: Cinzel (display), EB Garamond (body), UnifrakturMaguntia (drop caps).
+  The body face is set once, as `--font-body` in `assets/css/site.css`, paired
+  with `--body-size`.
 
 ## Preview
 
