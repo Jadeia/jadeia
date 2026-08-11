@@ -5,10 +5,12 @@
 #
 #     bash tools/fetch-plates.sh
 #
-# Plate I (Aberdeen Bestiary, MS 24 f.66r) is not on an open API and must be
-# saved by hand; this script tells you where to put it and checks for it at the
-# end. Everything is written to assets/img/plates/ with the exact filenames the
-# HTML already references.
+# Two plates are not fetched automatically and must be saved by hand:
+#   Plate I  — Aberdeen Bestiary, MS 24 f.65v (not on an open API)
+#   Plate V  — Schongauer, Met accession 19.7.2 (the API is keyed by objectID,
+#              which we do not have; save it from the object page instead)
+# The script checks for both at the end. Everything is written to
+# assets/img/plates/ with the exact filenames the HTML already references.
 #
 # Optimisation uses ImageMagick if it is installed (`brew install imagemagick`,
 # `apt install imagemagick`), and macOS `sips` otherwise. With neither, the
@@ -30,7 +32,12 @@ PLATES=(
   "387574|plate-ii-durer-saint-george-and-the-dragon.jpg|Plate II — Saint George and the Dragon"
   "368340|plate-iii-durer-saint-michael-fighting-the-dragon.jpg|Plate III — Saint Michael Fighting the Dragon"
   "391133|plate-iv-durer-saint-george-standing.jpg|Plate IV — Saint George Standing"
-  "388149|plate-v-durer-saint-george-slaying-the-dragon.jpg|Plate V — Saint George Slaying the Dragon"
+)
+
+# name|human label|where to get it — saved by hand, optimised here if present
+MANUAL=(
+  "plate-i-aberdeen-bestiary-f65v.jpg|Plate I — Aberdeen Bestiary, f.65v|https://www.abdn.ac.uk/bestiary/ms24/f65v"
+  "plate-v-schongauer-saint-george-slaying-the-dragon.jpg|Plate V — Schongauer, Saint George Slaying the Dragon|The Metropolitan Museum of Art, accession 19.7.2"
 )
 
 json_field() {
@@ -85,16 +92,19 @@ for row in "${PLATES[@]}"; do
 done
 
 echo
-BESTIARY="$OUT/plate-i-aberdeen-bestiary-f66r.jpg"
-if [ -f "$BESTIARY" ]; then
-  optimise "$BESTIARY"
-  echo "  Plate I — Aberdeen Bestiary: present ($(du -h "$BESTIARY" | cut -f1))"
-else
-  echo "  Plate I — Aberdeen Bestiary: MISSING."
-  echo "    Save the folio image from https://www.abdn.ac.uk/bestiary/ms24/f66r to:"
-  echo "      $BESTIARY"
-  echo "    then re-run this script to optimise it."
-fi
+for row in "${MANUAL[@]}"; do
+  IFS='|' read -r name label source <<< "$row"
+  file="$OUT/$name"
+  if [ -f "$file" ]; then
+    optimise "$file"
+    echo "  $label: present ($(du -h "$file" | cut -f1))"
+  else
+    echo "  $label: MISSING."
+    echo "    Save it from $source to:"
+    echo "      $file"
+    echo "    then re-run this script to optimise it."
+  fi
+done
 
 echo
 echo "Done. Preview with:  python3 -m http.server 8000 --directory \"$ROOT\""

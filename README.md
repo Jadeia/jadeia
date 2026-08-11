@@ -25,31 +25,55 @@ the holding institution's open-access release, credited in full in the caption:
 
 | Plate | Work | Source |
 | --- | --- | --- |
-| I | Aberdeen Bestiary, MS 24, folio 66r, 12th c. | [University of Aberdeen](https://www.abdn.ac.uk/bestiary/ms24/f66r) |
+| I | Aberdeen Bestiary, MS 24, folio 65v, 12th c. | [University of Aberdeen](https://www.abdn.ac.uk/bestiary/ms24/f65v) |
 | II | Dürer, *Saint George and the Dragon*, woodcut, ca. 1504 | [Met 387574](https://www.metmuseum.org/art/collection/search/387574), CC0 |
 | III | Dürer, *Saint Michael Fighting the Dragon* (The Apocalypse) | [Met 368340](https://www.metmuseum.org/art/collection/search/368340), CC0 |
 | IV | Dürer, *Saint George Standing*, engraving, ca. 1502 | [Met 391133](https://www.metmuseum.org/art/collection/search/391133), CC0 |
-| V | Dürer, *Saint George Slaying the Dragon*, woodcut, ca. 1504 | [Met 388149](https://www.metmuseum.org/art/collection/search/388149), CC0 |
+| V | Schongauer, *Saint George Slaying the Dragon*, engraving, 1470–1491 | The Met, accession 19.7.2, public domain |
 
 The markup expects these exact paths:
 
 ```
-assets/img/plates/plate-i-aberdeen-bestiary-f66r.jpg
+assets/img/plates/plate-i-aberdeen-bestiary-f65v.jpg
 assets/img/plates/plate-ii-durer-saint-george-and-the-dragon.jpg
 assets/img/plates/plate-iii-durer-saint-michael-fighting-the-dragon.jpg
 assets/img/plates/plate-iv-durer-saint-george-standing.jpg
-assets/img/plates/plate-v-durer-saint-george-slaying-the-dragon.jpg
+assets/img/plates/plate-v-schongauer-saint-george-slaying-the-dragon.jpg
 ```
 
-`bash tools/fetch-plates.sh` downloads the four Met plates and optimises them to
-those filenames (1600px long edge, quality 82, metadata stripped). Plate I has
-to be saved by hand from the Aberdeen page; the script reports whether it is
-there, and optimises it on a second run. If the files are added by other means,
-run the script anyway to normalise their size.
+`bash tools/fetch-plates.sh` downloads plates II–IV from the Met's Open Access
+API and optimises them to those filenames (1600px long edge, quality 82,
+metadata stripped). Plates I and V have to be saved by hand — the bestiary is
+not on an open API, and the Schongauer is identified by accession number rather
+than the objectID the API takes. The script reports whether both are present and
+optimises them on a second run. If files are added by other means, run the
+script anyway to normalise their size.
 
 Until a plate file exists, its frame renders as an empty mount rather than a
 broken image. That is the `onerror` attribute on each `<img>`; it can be dropped
 once all five files are in place.
+
+## Verifying a build
+
+Every plate `src` resolves to a file on disk (any `MISSING` line is a frame that
+will fall back to an empty mount):
+
+```sh
+for f in $(grep -rhoE '/assets/img/plates/[a-z0-9.-]+' --include='*.html' . | sort -u); do
+  [ -f ".$f" ] && echo "ok      $f" || echo "MISSING $f"
+done
+```
+
+The GA4 snippet is on every page (expect `1` beside all nine files):
+
+```sh
+grep -rc G-61T0721KTX --include='*.html' .
+```
+
+Live, after a deploy: `curl -s https://jadeia.org/ | grep -o 'G-[A-Z0-9]*'`
+should print the ID twice. DevTools → Network, filter `collect`, hard-reload —
+a request to `google-analytics.com/g/collect` carrying `tid=G-61T0721KTX` is
+what proves the tag actually fires.
 
 ## Adding a chronicle
 
